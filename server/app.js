@@ -245,10 +245,12 @@ app.post("/get_spotify_tracks", async function (req, res) {
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
+// Download the private key from Apple and save it as apple_private_key.p8:
 const private_key = fs.readFileSync("apple_private_key.p8").toString();
-const team_id = "P8QV6Y78WG";
-const key_id = "8N8R2J3D7X";
+const team_id = process.env.APPLE_TEAM_ID;
+const key_id = process.env.APPLE_KEY_ID;
 
+// Leave this all the same:
 const token = jwt.sign({}, private_key, {
   algorithm: "ES256",
   expiresIn: "180d",
@@ -265,5 +267,5 @@ app.get("/apple_token", function (req, res) {
 });
 
 let port = process.env.PORT;
-console.log(`Listening on port ${port}`);
+console.log(`Listening on port ${port}!`);
 app.listen(port);
