@@ -5,7 +5,7 @@ const OPTIMIZE_PRECISION = false;
 // Convert Spotify Track to Apple Music Track
 export const findSongOnAppleMusic = async (query) => {
   const appleMusic = getMusicInstance();
-  const searchTerms = getSearchTerms(query);
+  const searchTerms = getSearchTerms(query).toLowerCase();
   const response = await fetch(
     `https://api.music.apple.com/v1/catalog/au/search?term=${searchTerms}&limit=1&types=songs`,
     {
@@ -47,6 +47,10 @@ export const findSongOnAppleMusic = async (query) => {
     runnersUp: candidates.slice(1),
   };
 };
+
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 /* ------------------------------ AUTH HELP ----------------------------- */
 
@@ -109,10 +113,6 @@ function prune(string) {
     string = string.substring(0, string.indexOf("ft."));
   } else if (string.includes("feat.")) {
     string = string.substring(0, string.indexOf("feat."));
-  } else if (string.includes("feat")) {
-    string = string.substring(0, string.indexOf("feat"));
-  } else if (string.includes("ft")) {
-    string = string.substring(0, string.indexOf("ft"));
   }
-  return string;
+  return string.replace(/\s+$/, "");
 }

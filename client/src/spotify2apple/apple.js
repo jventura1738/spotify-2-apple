@@ -1,4 +1,4 @@
-import { findSongOnAppleMusic, getHeader, getMusicInstance } from "./helpers";
+import { findSongOnAppleMusic, getHeader, sleep } from "./helpers";
 
 export const createNewAppleMusicPlaylist = async (playlistInfo) => {
   const pname = playlistInfo.playlistName;
@@ -8,24 +8,17 @@ export const createNewAppleMusicPlaylist = async (playlistInfo) => {
       artists: track.artists,
     };
   });
+  const appleMusicTracks = [];
+  for (const track of trackList) {
+    const result = await findSongOnAppleMusic(track);
 
-  // const appleMusicTracks = [];
-  // trackList.forEach(async (track) => {
-  //   const result = await findSongOnAppleMusic(track);
-  //   if (result) {
-  //     appleMusicTracks.push(result.topSong.id);
-  //   }
-  //   // Use this later:
-  //   const runnersUp = result.runnersUp;
-  // });
-  const appleMusicTracks = await Promise.all(
-    trackList.map(async (track) => {
-      const result = await findSongOnAppleMusic(track);
-      if (result) {
-        return result.topSong.id;
-      }
-    })
-  ).then((validTracks) => validTracks.filter(Boolean));
+    if (result) {
+      appleMusicTracks.push(result.topSong.songId);
+    }
+
+    await sleep(250);
+  }
+  console.log("Creating playlist...");
   const response = await fetch(
     `https://api.music.apple.com/v1/me/library/playlists`,
     {
@@ -50,5 +43,6 @@ export const createNewAppleMusicPlaylist = async (playlistInfo) => {
 
   const newPlaylist = await response.json();
   const playlistId = newPlaylist.data[0].id;
-  console.log(playlistId);
+  console.log(newPlaylist);
+  console.log("Playlist created!", playlistId);
 };
