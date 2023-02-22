@@ -11,3 +11,6 @@ by Justin Ventura
 
 ### Instructions:
 coming soon
+
+### NOTES:
+1. Yes, my old token is hard coded in the git history.  It's revoked so don't bother using it, I made a new one :)
