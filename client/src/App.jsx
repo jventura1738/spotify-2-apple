@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 class App extends React.Component {
   render() {
     return (
-      <main className="bg-theme min-h-screen">
+      <main className="min-h-screen bg-theme">
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />

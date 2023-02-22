@@ -1,20 +1,6 @@
-import { findSongOnAppleMusic } from "./helpers";
-
-export function getMusicInstance() {
-  return window.MusicKit.getInstance();
-}
-
-export function getHeader() {
-  const header = {
-    Authorization: "Bearer " + getMusicInstance().developerToken,
-    "Music-User-Token": getMusicInstance().musicUserToken,
-    "Content-Type": "application/json",
-  };
-  return header;
-}
+import { findSongOnAppleMusic, getHeader, getMusicInstance } from "./helpers";
 
 export const createNewAppleMusicPlaylist = async (playlistInfo) => {
-  const appleMusic = getMusicInstance();
   const pname = playlistInfo.playlistName;
   const trackList = playlistInfo.map((track) => {
     return {
@@ -23,49 +9,40 @@ export const createNewAppleMusicPlaylist = async (playlistInfo) => {
     };
   });
 
-  const validTrackIDs = [];
-  trackList.forEach(async (track) => {
-    const result = await findSongOnAppleMusic(track);
-    if (result) {
-      validTrackIDs.push(result);
-    }
-  });
-  const queryParameters = { l: "en-au" };
-  const data = {
-    attributes: { name: pname, description: "Created by Spotify2Apple" },
-    // relationships: {
-    //   tracks: {
-    //     data: appleMusicTracks
-    //       .filter((search) => search.songs)
-    //       .map((search) => ({ id: search.songs.data[0].id, type: "songs" })),
-    //   },
-    // },
-  };
-  //   const response = await appleMusic.api.music(
-  //     "v1/me/library/playlists",
-  //     queryParameters,
-  //     {
-  //       fetchOptions: {
-  //         method: "POST",
-  //         body: JSON.stringify(data),
-  //         headers: getHeader(),
-  //       },
-  //     }
-  //   );
-
+  // const appleMusicTracks = [];
+  // trackList.forEach(async (track) => {
+  //   const result = await findSongOnAppleMusic(track);
+  //   if (result) {
+  //     appleMusicTracks.push(result.topSong.id);
+  //   }
+  //   // Use this later:
+  //   const runnersUp = result.runnersUp;
+  // });
+  const appleMusicTracks = await Promise.all(
+    trackList.map(async (track) => {
+      const result = await findSongOnAppleMusic(track);
+      if (result) {
+        return result.topSong.id;
+      }
+    })
+  ).then((validTracks) => validTracks.filter(Boolean));
   const response = await fetch(
     `https://api.music.apple.com/v1/me/library/playlists`,
     {
       method: "POST",
-      headers: {
-        Authorization: "Bearer " + getMusicInstance().developerToken,
-        "Music-User-Token": getMusicInstance().musicUserToken,
-        "Content-Type": "application/json",
-      },
+      headers: getHeader(),
       body: JSON.stringify({
         attributes: {
           name: pname,
           description: "Created from Spotify via Spotify2Apple",
+        },
+        relationships: {
+          tracks: {
+            data: appleMusicTracks.map((track) => ({
+              id: track,
+              type: "songs",
+            })),
+          },
         },
       }),
     }
@@ -73,6 +50,5 @@ export const createNewAppleMusicPlaylist = async (playlistInfo) => {
 
   const newPlaylist = await response.json();
   const playlistId = newPlaylist.data[0].id;
-
   console.log(playlistId);
 };
