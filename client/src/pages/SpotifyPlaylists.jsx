@@ -53,7 +53,9 @@ const SpotifyPlaylists = () => {
   const handleAppleConversion = async () => {
     setLoading(true);
     const appleMusic = window.MusicKit.getInstance();
+    console.log("Authorizing Apple Music...");
     await appleMusic.authorize();
+    console.log("Apple Music authorized!");
 
     const spotifyTracksUrl = process.env.REACT_APP_GET_SPOTIFY_TRACKS_URL;
     const allPlaylistsTracksInfoPromises = selectedPlaylists.map(
@@ -86,10 +88,12 @@ const SpotifyPlaylists = () => {
     )
       .then(() => {
         setLoading(false);
+        // appleMusic.unauthorize();
       })
       .catch((error) => {
         console.error(error);
         setLoading(false);
+        // appleMusic.unauthorize();
       });
   };
 
