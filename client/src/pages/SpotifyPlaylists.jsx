@@ -79,10 +79,18 @@ const SpotifyPlaylists = () => {
     const playlistsToBeTransferred = await Promise.all(
       allPlaylistsTracksInfoPromises
     );
-    playlistsToBeTransferred.forEach(async (playlist) => {
-      await createNewAppleMusicPlaylist(playlist);
-    });
-    setLoading(false);
+    Promise.all(
+      playlistsToBeTransferred.map(async (playlist) => {
+        await createNewAppleMusicPlaylist(playlist);
+      })
+    )
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
 
   return (

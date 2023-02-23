@@ -32,10 +32,10 @@ class Home extends React.Component {
             </button>
             {/* <button
               type="submit"
-              className={`bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded-full`}
+              className={`rounded-full bg-green-500 py-2 px-4 font-bold text-black hover:bg-green-600`}
               onClick={this.showAppleMusicLogin}
             >
-              Convert Apple Music -{">"} Spotify
+              Convert Apple Music -{">"} Spotify (coming soon)
             </button> */}
           </div>
         </div>
