@@ -8,6 +8,8 @@ import Footer from "../components/Footer";
 import { createNewAppleMusicPlaylist } from "../spotify2apple/apple";
 
 const spotifyPlaylistsUrl = process.env.REACT_APP_SPOTIFY_PLAYLISTS_URL;
+const spotifyToAppleResultsUrl =
+  process.env.REACT_APP_SPOTIFY_TO_APPLE_RESULTS_URL;
 const spotifyAccessToken = Cookies.get("spotify_access_token");
 
 const SpotifyPlaylists = () => {
@@ -86,14 +88,14 @@ const SpotifyPlaylists = () => {
         await createNewAppleMusicPlaylist(playlist);
       })
     )
-      .then(() => {
-        setLoading(false);
-        // appleMusic.unauthorize();
+      .then(async () => {
+        await appleMusic.unauthorize();
+        window.location.replace(spotifyToAppleResultsUrl);
       })
-      .catch((error) => {
+      .catch(async (error) => {
         console.error(error);
         setLoading(false);
-        // appleMusic.unauthorize();
+        await appleMusic.unauthorize();
       });
   };
 

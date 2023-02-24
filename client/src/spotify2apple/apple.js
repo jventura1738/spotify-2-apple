@@ -2,7 +2,7 @@ import { findSongOnAppleMusic, getHeader, sleep } from "./helpers";
 
 export const createNewAppleMusicPlaylist = async (playlistInfo) => {
   console.log("Fetching tracks from Spotify...");
-  const pname = playlistInfo.playlistName;
+  const pname = playlistInfo.playlistName + " (Spotify2Apple)";
   const trackList = playlistInfo.map((track) => {
     return {
       songName: track.trackName,
