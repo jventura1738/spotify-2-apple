@@ -1,5 +1,7 @@
 # Spotify 2 Apple
 
+[![Spotify 2 Apple YouTube](https://img.youtube.com/vi/H7LBnBkQscU/0.jpg)](https://www.youtube.com/watch?v=H7LBnBkQscU)
+
 Spotify - Apple Music playlist converter
 
 by Justin Ventura
