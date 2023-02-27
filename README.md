@@ -41,10 +41,10 @@ by Justin Ventura
 - The app is currently kinda slow due to Apple's rate limiting. I will figure out the solution to this.
 - If the app can't find a song, it will skip it. I will be adding a way to manually add songs to the playlist eventually.
 
-1. If something doesn't work while setting up, consider the following:
+3. If something doesn't work while setting up, consider the following:
 
 - Make sure your Spotify and Apple Music dev accounts and associated keys are expired and are correct.
 - Ensure that your `.env` files are consistent and follow the comments.
 - Make sure your ports aren't blocked.
 
-3. If you've followed the instructions carefully and it still won't work, leave an issue and I'll sort it out!
+4. If you've followed the instructions carefully and it still won't work, leave an issue and I'll sort it out!
