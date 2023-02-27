@@ -37,14 +37,14 @@ by Justin Ventura
 1. Yes, my old token is hard coded in the git history. It's revoked so don't bother using it, I made a new one :)
 2. Here are some current limitations that I will be addressing:
 
-- You can only go from Spotify to Apple Music. I will be adding the reverse functionality soon.
-- The app is currently kinda slow due to Apple's rate limiting. I will figure out the solution to this.
-- If the app can't find a song, it will skip it. I will be adding a way to manually add songs to the playlist eventually.
+  - You can only go from Spotify to Apple Music. I will be adding the reverse functionality soon.
+  - The app is currently kinda slow due to Apple's rate limiting. I will figure out the solution to this.
+  - If the app can't find a song, it will skip it. I will be adding a way to manually add songs to the playlist eventually.
 
 3. If something doesn't work while setting up, consider the following:
 
-- Make sure your Spotify and Apple Music dev accounts and associated keys are expired and are correct.
-- Ensure that your `.env` files are consistent and follow the comments.
-- Make sure your ports aren't blocked.
+  - Make sure your Spotify and Apple Music dev accounts and associated keys are expired and are correct.
+  - Ensure that your `.env` files are consistent and follow the comments.
+  - Make sure your ports aren't blocked.
 
 4. If you've followed the instructions carefully and it still won't work, leave an issue and I'll sort it out!
